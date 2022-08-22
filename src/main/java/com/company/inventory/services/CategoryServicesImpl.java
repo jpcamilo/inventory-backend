@@ -140,4 +140,23 @@ public class CategoryServicesImpl implements ICategoryServices{
 		return new ResponseEntity<CategoryReponseRest>(response,HttpStatus.OK);
 	}
 
+	@Override
+	@Transactional
+	public ResponseEntity<CategoryReponseRest> deleteById(Long id) {
+		
+		CategoryReponseRest response = new CategoryReponseRest();
+		try {
+
+			categoryDao.deleteById(id);
+			response.setMetadata("Respuesta ok", "00", "Registro Eliminado");
+			
+		} catch (Exception e) {
+			response.setMetadata("Respuesta nok", "-1", "Error al eliminar");
+			e.getStackTrace();
+			return new ResponseEntity<CategoryReponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	
+		return new ResponseEntity<CategoryReponseRest>(response,HttpStatus.OK);
+	}
+
 }
